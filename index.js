@@ -3,6 +3,8 @@ const axios = require('axios');
 const PORT = process.env.PORT || 5000;
 const app = express();
 const bodyParser = require('body-parser');
+const TelegramBot = require('node-telegram-bot-api');
+const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -10,6 +12,7 @@ app.use(bodyParser.text());
 
 app.get('*', (req, res) => {
   res.send('works');
+  console.dir(process.env);
 });
 
 app.post('*', (req, res) => {
@@ -23,3 +26,11 @@ app.post('*', (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+// BOT
+bot.onText(/\/start/, (msg) => {
+  const chatId = msg.chat.id;
+
+  // send back the matched "whatever" to the chat
+  bot.sendMessage(chatId, `Your webhook url: ${chatId}`);
+});
