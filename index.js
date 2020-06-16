@@ -14,10 +14,9 @@ app.get('*', (req, res) => {
   res.send(
     '<iframe width="560" height="315" src="https://www.youtube.com/embed/NuAKnbIr6TE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
   );
-  console.dir(process.env);
 });
 
-app.post(':id', (req, res) => {
+app.post('/:id', (req, res) => {
   const token = process.env.TELEGRAM_TOKEN;
   const chatId = req.params.id;
 
