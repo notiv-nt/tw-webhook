@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 const PORT = process.env.PORT || 5000;
 const app = express();
 const bodyParser = require('body-parser');
@@ -12,7 +13,10 @@ app.get('*', (req, res) => {
 });
 
 app.post('*', (req, res) => {
-  console.log(req.body);
+  const token = process.env.TELEGRAM_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+
+  axios.post(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(req.body)}`);
   res.send('ok');
 });
 
