@@ -15,11 +15,13 @@ app.get('*', (req, res) => {
   console.dir(process.env);
 });
 
-app.post('*', (req, res) => {
+app.post(':id', (req, res) => {
   const token = process.env.TELEGRAM_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
+  const chatId = req.params.id;
 
   const msg = encodeURIComponent(`Alert: ${req.body}`);
+
+  console.log(`Send ${chatId}, msg`);
 
   axios.post(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${msg}`);
   res.send('ok');
@@ -32,5 +34,5 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
 
   // send back the matched "whatever" to the chat
-  bot.sendMessage(chatId, `Your webhook url: ${chatId}`);
+  bot.sendMessage(chatId, `Your webhook url: ${process.env.APP_URL}/${chatId}`);
 });
