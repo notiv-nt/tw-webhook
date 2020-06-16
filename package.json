@@ -1,7 +1,16 @@
 {
   "name": "tw-webhook",
   "version": "1.0.0",
+  "description": "Tradingview alert webhook",
+  "engines": {
+    "node": "12.x"
+  },
   "main": "index.js",
-  "author": "Mikhail Novikov <notiv.nt@gmail.com>",
-  "license": "MIT"
+  "scripts": {
+    "start": "node index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
