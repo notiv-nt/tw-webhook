@@ -11,7 +11,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.text());
 
 app.get('*', (req, res) => {
-  res.send('works');
+  res.send(
+    '<iframe width="560" height="315" src="https://www.youtube.com/embed/NuAKnbIr6TE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+  );
   console.dir(process.env);
 });
 
