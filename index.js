@@ -16,7 +16,9 @@ app.post('*', (req, res) => {
   const token = process.env.TELEGRAM_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
 
-  axios.post(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(req.body)}`);
+  const msg = encodeURIComponent(`Alert: ${req.body}`);
+
+  axios.post(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${msg}`);
   res.send('ok');
 });
 
