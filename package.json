@@ -1,0 +1,7 @@
+{
+  "name": "tw-webhook",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Mikhail Novikov <notiv.nt@gmail.com>",
+  "license": "MIT"
+}
