@@ -2,18 +2,19 @@ const express = require('express');
 const axios = require('axios');
 const PORT = process.env.PORT || 5000;
 const app = express();
-const bodyParser = require('body-parser');
 const TelegramBot = require('node-telegram-bot-api');
+
+require('dotenv').config();
+
 const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(bodyParser.text());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.text());
 
 app.get('*', (req, res) => {
-  res.send(
-    '<iframe width="560" height="315" src="https://www.youtube.com/embed/NuAKnbIr6TE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-  );
+  res.send(`<iframe width="560" height="315" src="https://www.youtube.com/embed/NuAKnbIr6TE" frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
 });
 
 app.post('/:id', (req, res) => {
