@@ -7,6 +7,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.text());
 
+app.get('/:id', (req, res) => {
+  res.send(`
+    <script>
+      document.write('Paste this url to the "Webhook URL" field: ' + location.href);
+    </script>
+  `);
+});
+
 app.get('*', (req, res) => {
   res.send(`<iframe width="560" height="315" src="https://www.youtube.com/embed/NuAKnbIr6TE" frameborder="0"
     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
