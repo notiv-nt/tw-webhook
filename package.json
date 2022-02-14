@@ -5,15 +5,15 @@
   "engines": {
     "node": "16.x"
   },
-  "main": "index.js",
+  "main": "src/main.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/main.js"
   },
   "license": "MIT",
   "dependencies": {
     "axios": "^0.26.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.1",
-    "node-telegram-bot-api": "^0.56.0"
+    "telegraf": "^4.7.0"
   }
 }

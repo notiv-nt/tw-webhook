@@ -1,14 +1,7 @@
 const express = require('express');
 const axios = require('axios');
-const PORT = process.env.PORT || 5000;
+
 const app = express();
-const TelegramBot = require('node-telegram-bot-api');
-
-require('dotenv').config();
-
-console.log(process.env)
-
-const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -31,12 +24,6 @@ app.post('/:id', (req, res) => {
   res.send('ok');
 });
 
-app.listen(PORT, () => console.log(`Listening on ${PORT}`));
-
-// BOT
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-
-  // send back the matched "whatever" to the chat
-  bot.sendMessage(chatId, `Your webhook url: ${process.env.APP_URL}/${chatId}`);
-});
+module.exports = {
+  app,
+};
