@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "Tradingview alert webhook",
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   },
   "main": "index.js",
   "scripts": {
@@ -11,9 +11,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.2",
-    "dotenv": "^8.2.0",
+    "axios": "^0.26.0",
+    "dotenv": "^16.0.0",
     "express": "^4.17.1",
-    "node-telegram-bot-api": "^0.50.0"
+    "node-telegram-bot-api": "^0.56.0"
   }
 }
