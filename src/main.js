@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const https = require('https');
-const fs = request('fs');
+const fs = require('fs');
 
 const { app } = require('./app');
 const { bot } = require('./bot');
