@@ -11,4 +11,4 @@ ssl:
 	sudo add-apt-repository ppa:certbot/certbot && \
 	sudo apt-get update && \
 	sudo apt-get install certbot && \
-	sudo certbot --manual
+	sudo certbot certonly --manual
