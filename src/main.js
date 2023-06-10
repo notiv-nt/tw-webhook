@@ -8,7 +8,9 @@ const { app } = require('./app');
 const { bot } = require('./bot');
 
 function main() {
-  let httpServer = http.createServer(app).listen(80, () => console.log('HTTP Server running on port 80'));
+  const PORT = parseInt(process.env.PORT, 10) || 5000;
+
+  let httpServer = http.createServer(app).listen(PORT, () => console.log('HTTP Server running on port 80'));
   let httpsServer = null;
 
   if (process.env.NODE_ENV === 'production') {
