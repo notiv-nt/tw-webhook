@@ -7,24 +7,34 @@ const { app } = require('./app');
 const { bot } = require('./bot');
 
 function main() {
-  const PORT = parseInt(process.env.PORT, 10) || 5000;
+  const privateKey = fs.readFileSync('/etc/letsencrypt/live/ntx.fi/privkey.pem', 'utf8');
+  const certificate = fs.readFileSync('/etc/letsencrypt/live/ntx.fi/cert.pem', 'utf8');
+  const ca = fs.readFileSync('/etc/letsencrypt/live/ntx.fi/chain.pem', 'utf8');
 
-  let server;
+  const credentials = {
+    key: privateKey,
+    cert: certificate,
+    ca: ca,
+  };
 
-  if (port === 443) {
-    server = https
-      .createServer({ key: fs.readFileSync('./key.pem'), cert: fs.readFileSync('./cert.pem') }, app)
-      .listen(PORT, () => console.log(`Listening on ${PORT}`));
-  } else {
-    server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
-  }
+  const httpServer = http.createServer(app);
+  const httpsServer = https.createServer(credentials, app);
+
+  httpServer.listen(80, () => {
+    console.log('HTTP Server running on port 80');
+  });
+
+  httpsServer.listen(443, () => {
+    console.log('HTTPS Server running on port 443');
+  });
 
   bot.launch();
 
   ['SIGINT', 'SIGTERM'].forEach((code) => {
     process.once(code, () => {
       bot.stop(code);
-      server.close();
+      httpServer.close();
+      httpsServer.close();
     });
   });
 }
