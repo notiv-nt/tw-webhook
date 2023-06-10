@@ -4,5 +4,5 @@ start:
 
 restart:
 	git pull && \
-	pm2 restart --env production && \
+	pm2 restart all --env production && \
 	pm2 save
