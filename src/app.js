@@ -7,7 +7,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.text());
 
-app.get('/:id', (req, res) => {
+app.get('/t/:id', (req, res) => {
   res.send(`
     <script>
       document.write('Paste this url to the "Webhook URL" field: ' + location.href);
@@ -20,7 +20,7 @@ app.get('*', (req, res) => {
     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
 });
 
-app.post('/:id', (req, res) => {
+app.post('/t/:id', (req, res) => {
   const token = process.env.TELEGRAM_TOKEN;
   const chatId = req.params.id;
 
