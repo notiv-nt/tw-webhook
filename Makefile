@@ -2,7 +2,7 @@ start:
 	pm2 start --env production && \
 	pm2 save
 
-restart:
+update:
 	git pull && \
 	pm2 restart ./ecosystem.config.js --env production && \
 	pm2 save
