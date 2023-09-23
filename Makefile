@@ -1,3 +1,6 @@
+prepare:
+	npm i -g pm2
+
 start:
 	pm2 start --env production && \
 	pm2 save
@@ -8,7 +11,14 @@ update:
 	pm2 save
 
 ssl:
-	sudo add-apt-repository ppa:certbot/certbot && \
-	sudo apt-get update && \
-	sudo apt-get install certbot && \
-	sudo certbot certonly --manual
+	apt-get install certbot && \
+	certbot certonly --manual
+
+install-node:
+	apt-get update
+	apt-get install -y ca-certificates curl gnupg
+	mkdir -p /etc/apt/keyrings
+	curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+	NODE_MAJOR=20 && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+	apt-get update
+	apt-get install nodejs -y
