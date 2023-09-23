@@ -25,7 +25,9 @@ function main() {
       httpsServer = https.createServer(credentials, app);
       httpsServer.listen(443, () => console.log('HTTPS Server running on port 443'));
     } catch (e) {
-      console.log(e);
+      if (e.code === 'ENOENT') {
+        console.error('No certificate found, skipping HTTPS server');
+      }
     }
   }
 
