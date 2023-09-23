@@ -4,6 +4,7 @@ prepare:
 start:
 	pm2 start ./ecosystem.config.js --env production
 	pm2 save
+	pm2 list
 
 update:
 	git pull && \
