@@ -14,15 +14,19 @@ function main() {
   let httpsServer = null;
 
   if (process.env.NODE_ENV === 'production') {
-    // https://itnext.io/node-express-letsencrypt-generate-a-free-ssl-certificate-and-run-an-https-server-in-5-minutes-a730fbe528ca
-    const credentials = {
-      key: fs.readFileSync(`/etc/letsencrypt/live/${process.env.APP_DOMAIN}/privkey.pem`, 'utf8'),
-      cert: fs.readFileSync(`/etc/letsencrypt/live/${process.env.APP_DOMAIN}/cert.pem`, 'utf8'),
-      ca: fs.readFileSync(`/etc/letsencrypt/live/${process.env.APP_DOMAIN}/chain.pem`, 'utf8'),
-    };
+    try {
+      // https://itnext.io/node-express-letsencrypt-generate-a-free-ssl-certificate-and-run-an-https-server-in-5-minutes-a730fbe528ca
+      const credentials = {
+        key: fs.readFileSync(`/etc/letsencrypt/live/${process.env.APP_DOMAIN}/privkey.pem`, 'utf8'),
+        cert: fs.readFileSync(`/etc/letsencrypt/live/${process.env.APP_DOMAIN}/cert.pem`, 'utf8'),
+        ca: fs.readFileSync(`/etc/letsencrypt/live/${process.env.APP_DOMAIN}/chain.pem`, 'utf8'),
+      };
 
-    httpsServer = https.createServer(credentials, app);
-    httpsServer.listen(443, () => console.log('HTTPS Server running on port 443'));
+      httpsServer = https.createServer(credentials, app);
+      httpsServer.listen(443, () => console.log('HTTPS Server running on port 443'));
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   bot.launch();
