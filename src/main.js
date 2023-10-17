@@ -3,14 +3,42 @@ require('dotenv').config();
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
+const express = require('express');
+const { Telegraf } = require('telegraf');
 
-const { app } = require('./app');
-const { bot } = require('./bot');
+const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
+const app = express();
+
+bot.start((ctx) => {
+  ctx.reply(`Your webhook url:\nhttps://${process.env.APP_DOMAIN}/t/${ctx.chat.id}`);
+});
+
+// bot.inlineQuery('print', (ctx) => { console.dir(ctx) })
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.text());
+app.use(express.static('public'));
+
+app.get('/t/:id', (req, res) => {
+  res.send(`<script>document.write('Paste this url to the "Webhook URL" field: ' + location.href);</script>`);
+});
+
+// app.get('*', (req, res) => {
+//   res.send(`<iframe width="560" height="315" src="https://www.youtube.com/embed/NuAKnbIr6TE" frameborder="0"
+//     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
+// });
+
+app.post('/t/:id', (req, res) => {
+  console.log(`Sending ${req.params.id}, ${req.body}`);
+  bot.telegram.sendMessage(req.params.id, req.body).catch(console.log).then(console.log);
+  res.send('ok');
+});
 
 function main() {
-  const PORT = parseInt(process.env.PORT, 10) || 5000;
+  const PORT = parseInt(process.env.PORT, 10) || 5100;
 
-  let httpServer = http.createServer(app).listen(PORT, () => console.log('HTTP Server running on port 80'));
+  let httpServer = http.createServer(app).listen(PORT, () => console.log(`HTTP Server running on port ${PORT}`));
   let httpsServer = null;
 
   if (process.env.NODE_ENV === 'production') {
