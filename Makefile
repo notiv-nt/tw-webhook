@@ -13,7 +13,7 @@ update:
 	pm2 save
 
 ssl:
-	apt-get install certbot && \
+	apt-get install certbot -y && \
 	certbot certonly --manual
 
 install-node:
