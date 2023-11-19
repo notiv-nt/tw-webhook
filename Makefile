@@ -2,6 +2,7 @@ prepare:
 	npm i -g pm2
 
 start:
+	npm i
 	pm2 start ./ecosystem.config.js --env production
 	pm2 save
 	pm2 list
