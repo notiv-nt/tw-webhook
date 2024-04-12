@@ -2,11 +2,14 @@ require('dotenv').config();
 
 const http = require('http');
 const express = require('express');
+const cors = require('cors');
 
 const app = express();
 const PORT = parseInt(process.env.PORT, 10) || 5100;
 
 const bot = require('./bot');
+
+app.use(cors());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
