@@ -2,15 +2,11 @@ require('dotenv').config();
 
 const http = require('http');
 const express = require('express');
-const { Telegraf } = require('telegraf');
 
-const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 const app = express();
 const PORT = parseInt(process.env.PORT, 10) || 5100;
 
-bot.start((ctx) => {
-  ctx.reply(`Your webhook url:\nhttps://${process.env.APP_DOMAIN}/t/${ctx.chat.id}`);
-});
+const bot = require('./bot');
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -26,6 +22,8 @@ app.post('/t/:id', (req, res) => {
   bot.telegram.sendMessage(req.params.id, req.body).catch(console.log).then(console.log);
   res.send('ok');
 });
+
+require('./orders')(app);
 
 function main() {
   const httpServer = http.createServer(app).listen(PORT, () => console.log(`HTTP Server running on port ${PORT}`));
