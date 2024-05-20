@@ -1,13 +1,13 @@
-require('dotenv').config();
+import 'dotenv/config';
 
-const http = require('http');
-const express = require('express');
-const cors = require('cors');
+import http from 'http';
+import express from 'express';
+import cors from 'cors';
+import bot from './bot.mjs';
+import orders from './orders.mjs';
 
 const app = express();
 const PORT = parseInt(process.env.PORT, 10) || 5100;
-
-const bot = require('./bot');
 
 app.use(cors());
 
@@ -26,7 +26,7 @@ app.post('/t/:id', (req, res) => {
   res.send('ok');
 });
 
-require('./orders')(app);
+orders(app);
 
 function main() {
   const httpServer = http.createServer(app).listen(PORT, () => console.log(`HTTP Server running on port ${PORT}`));
