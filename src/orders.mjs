@@ -28,7 +28,7 @@ export default (app) => {
 
   app.delete('/o/:auth/:id', (req, res) => {
     ensureArr(req.params.auth);
-    items[req.params.auth] = req.params.auth.filter((i) => i._id !== req.params.id);
+    items[req.params.auth] = items[req.params.auth].filter((i) => i._id !== req.params.id);
     res.send('');
   });
 };
