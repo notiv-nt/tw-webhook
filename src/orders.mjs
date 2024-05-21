@@ -9,7 +9,7 @@ import { nanoid } from 'nanoid';
 const items = {};
 
 export default (app) => {
-  app.get('/o/:auth', (req, res) => res.json(items[req.params.auth] || {}));
+  app.get('/o/:auth', (req, res) => res.json(Object.values(items[req.params.auth] || {})));
 
   app.post('/o/:auth', (req, res) => {
     const item = getItem(req.params.auth, req.body.ticket);
