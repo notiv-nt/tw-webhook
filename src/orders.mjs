@@ -4,8 +4,6 @@
  * }
  */
 
-import { nanoid } from 'nanoid';
-
 const items = {};
 
 export default (app) => {
@@ -17,11 +15,6 @@ export default (app) => {
     // create new
     if (!item) {
       items[req.params.auth][req.body.ticket] = req.body;
-      return res.json(null);
-    }
-
-    // skip closed
-    if (item.close_time) {
       return res.json(null);
     }
 
