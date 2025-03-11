@@ -16,6 +16,12 @@ app.use(express.json());
 app.use(express.text());
 app.use(express.static('public'));
 
+app.get('/proxy', async (req, res) => {
+  const url = decodeURIComponent(req.query.url);
+  const text = await fetch(url).then((r) => r.text());
+  res.send(text);
+});
+
 app.get('/t/:id', (req, res) => {
   res.send(`<script>document.write('Paste this url to the "Webhook URL" field: ' + location.href);</script>`);
 });
