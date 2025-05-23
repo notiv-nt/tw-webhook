@@ -1,17 +1,12 @@
 const items = {
-  // [auth_key]: {
-  //   [source]: any[]
-  // }
+  // [any_key]: any[]
 };
 
 export default (app) => {
-  app.get('/o/:auth', (req, res) => res.json(items[req.params.auth] || []));
+  app.get('/o/:path(*)', (req, res) => res.json(items[req.params.path] || []));
 
-  app.post('/o/:auth/:source', (req, res) => {
-    if (!items[req.params.auth]) {
-      items[req.params.auth] = {};
-    }
-    items[req.params.auth][req.params.source] = req.body;
+  app.post('/o/:path(*)', (req, res) => {
+    items[req.params.path] = req.body;
     return res.json(null);
   });
 };
