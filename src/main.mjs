@@ -14,12 +14,9 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.text());
-app.use(express.static('public'));
 
 app.get('/proxy', async (req, res) => {
-  const url = decodeURIComponent(req.query.url);
-  const text = await fetch(url).then((r) => r.text());
-  res.send(text);
+  res.send(await fetch(decodeURIComponent(req.query.url)).then((r) => r.text()));
 });
 
 app.get('/t/:id', (req, res) => {
@@ -31,6 +28,8 @@ app.post('/t/:id', (req, res) => {
   bot.telegram.sendMessage(req.params.id, req.body).catch(console.log).then(console.log);
   res.send('ok');
 });
+
+app.get('*', (req, res) => res.send(new Date().toString()));
 
 orders(app);
 
