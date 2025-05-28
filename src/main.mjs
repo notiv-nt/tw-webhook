@@ -1,13 +1,16 @@
 import 'dotenv/config';
-
 import http from 'http';
 import express from 'express';
 import cors from 'cors';
-import bot from './bot.mjs';
-import orders from './orders.mjs';
+import { Telegraf } from 'telegraf';
 
 const app = express();
 const PORT = parseInt(process.env.PORT, 10) || 5100;
+const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
+
+  bot.start((ctx) => {
+    ctx.reply(`Your webhook url:\nhttps://${process.env.APP_DOMAIN}/t/${ctx.chat.id}`);
+  });
 
 app.use(cors());
 
@@ -29,19 +32,30 @@ app.post('/t/:id', (req, res) => {
   res.send('ok');
 });
 
-app.get('*', (req, res) => res.send(new Date().toString()));
+const orders = {
+  /* [any_key]: any[] */
+};
+app.get('/o/:path(*)', (req, res) => res.json(orders[req.params.path] || []));
+app.post('/o/:path(*)', (req, res) => {
+  orders[req.params.path] = req.body;
+  return res.json(null);
+});
 
-orders(app);
+app.get('*', (req, res) => res.send(new Date().toString()));
 
 function main() {
   const httpServer = http.createServer(app).listen(PORT, () => console.log(`HTTP Server running on port ${PORT}`));
 
-  bot.launch();
+  if (process.env.TELEGRAM_TOKEN) {
+    bot.launch();
+  } else {
+    console.log('TELEGRAM_TOKEN is not set');
+  }
 
   ['SIGINT', 'SIGTERM'].forEach((code) => {
     process.once(code, () => {
-      bot.stop(code);
       httpServer?.close();
+      bot.stop(code);
     });
   });
 }
