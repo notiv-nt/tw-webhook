@@ -8,15 +8,16 @@ const app = express();
 const PORT = parseInt(process.env.PORT, 10) || 5100;
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
 
-  bot.start((ctx) => {
-    ctx.reply(`Your webhook url:\nhttps://${process.env.APP_DOMAIN}/t/${ctx.chat.id}`);
-  });
+bot.start((ctx) => {
+  ctx.reply(`Your webhook url:\nhttps://${process.env.APP_DOMAIN}/t/${ctx.chat.id}`);
+});
 
 app.use(cors());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.text());
+app.use(express.static('../public'));
 
 app.get('/proxy', async (req, res) => {
   res.send(await fetch(decodeURIComponent(req.query.url)).then((r) => r.text()));
