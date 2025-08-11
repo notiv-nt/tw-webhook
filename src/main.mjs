@@ -43,6 +43,11 @@ app.post('/o/:path(*)', (req, res) => {
   return res.json(null);
 });
 
+app.all('/log', (req, res) => {
+  console.log(req.headers);
+  console.log(req.body);
+  return res.json(null);
+});
 app.get('*', (req, res) => res.send(new Date().toString()));
 
 function main() {
