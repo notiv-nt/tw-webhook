@@ -45,7 +45,7 @@ app.post('/o/:path(*)', (req, res) => {
 
 app.all('/log', (req, res) => {
   console.log(req.headers);
-  console.log(req.body);
+  console.log(JSON.stringify(req.body));
   return res.json(null);
 });
 app.get('*', (req, res) => res.send(new Date().toString()));
