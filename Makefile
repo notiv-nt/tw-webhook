@@ -10,8 +10,7 @@ start:
 update:
 	git pull && \
 	npm i && \
-	pm2 restart ./ecosystem.config.js --env production && \
-	pm2 save
+	pm2 restart ./ecosystem.config.js --env production
 
 ssl:
 	apt-get install certbot -y && \
