@@ -3,7 +3,6 @@ import http from 'http';
 import express from 'express';
 import cors from 'cors';
 import { Telegraf } from 'telegraf';
-import path from 'path';
 
 const app = express();
 const PORT = parseInt(process.env.PORT, 10) || 5100;
@@ -18,7 +17,6 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.text());
-app.use(express.static(path.resolve('./public')));
 
 app.get('/proxy', async (req, res) => {
   res.send(await fetch(decodeURIComponent(req.query.url)).then((r) => r.text()));
